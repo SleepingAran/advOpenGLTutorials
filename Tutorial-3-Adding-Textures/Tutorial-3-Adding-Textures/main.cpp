@@ -32,9 +32,12 @@ int main()
 	//set callback function
 	glfwSetKeyCallback(window, key_callback);
 
+	glewExperimental = GL_TRUE;
+
+	glewInit();
 	//create viewport
 	glViewport(0, 0, 800, 600);
-
+	
 	//SOIL Starts
 	GLuint texture;
 	glGenTextures(1, &texture);
@@ -46,6 +49,30 @@ int main()
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0);
 	//SOIL Ends
+	//Initiate triangle
+	//Set each vertices of the triangle
+	GLfloat vertices[] =
+	{
+		-0.5f, -0.5f, 0.0f,
+		0.5f, -0.5f, 0.0f,
+		0.0f, 0.5f, 0.0f
+	};
+
+	//Setup pointer array and buffer
+	GLuint VBO, VAO;
+	glGenVertexArrays(1, &VAO);
+	glGenBuffers(1, &VBO);
+
+	//Bind the Vertex Array object first, then bind and set vertex buffer and attribute pointer
+	glBindVertexArray(VAO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+	glEnableVertexAttribArray(0);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindVertexArray(0);
+	//Initiate triangle ends
 
 	//prevent app from self quit
 	while (!glfwWindowShouldClose(window))
@@ -56,11 +83,14 @@ int main()
 		//Rendering commands
 		glClearColor(0.0f, 0.0f, .6f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3);
+		glBindVertexArray(0);
 		//swap the buffers
 		glfwSwapBuffers(window);
 	}
-
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 	return 0;
 }
