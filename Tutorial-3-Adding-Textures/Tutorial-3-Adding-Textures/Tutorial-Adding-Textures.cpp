@@ -60,6 +60,8 @@ void main()
 	//Enable alpha support for PNG files
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
 	//Vertex Shadow
 	//Vertex shader
 	GLuint vertexShader = glCreateShader(GL_VERTEX_SHADER);
@@ -110,9 +112,11 @@ void main()
 	//Set each vertices of the triangle
 	GLfloat vertices[] =
 	{
-		-0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f,
-		0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 0.0f,
-		0.0f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f
+		//Position			// Colour			//Texture Coord
+		0.5f, 0.5f, 0.0f,	1.0f, 1.0f, 0.0f,	1.0f, 1.0f, //Top Right
+		0.5f, -0.5f, 0.0f,	0.0f, 0.0f, 1.0f,	1.0f, 0.0f, //Bottom Right
+		-0.5f, -0.5f, 0.0f,	0.0f, 1.0f, 0.0f,	0.0f, 0.0f, //Bottom Left
+		-0.5f, 0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	0.0f, 1.0f, //Top Left
 	};
 
 	//Setup pointer array and buffer
