@@ -119,6 +119,12 @@ void main()
 		-0.5f, 0.5f, 0.0f,	1.0f, 0.0f, 0.0f,	0.0f, 1.0f, //Top Left
 	};
 
+	// Indexing - share indices
+	GLuint indices[] =
+	{
+		0,1,3,
+		1,2,3,
+	};
 	//Setup pointer array and buffer
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);

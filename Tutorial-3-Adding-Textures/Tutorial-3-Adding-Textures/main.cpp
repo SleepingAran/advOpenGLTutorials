@@ -1,3 +1,5 @@
+//Abandoned
+
 #include<iostream>
 #define GLEW_STATIC
 #include <opengl\include\GL\glew.h>
