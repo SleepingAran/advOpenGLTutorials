@@ -17,19 +17,24 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 const GLchar* vertexShaderSource = "#version 330 core\n"
 "layout (location =0 ) in vec3 position;\n"
 "layout (location =1 ) in vec3 color;\n"
+"layout (location =2 ) in vec2 texCoord;\n"
 "out vec3 ourColor;\n"
+"out vec2 TexCoord;\n"
 "void main()\n"
 "{\n"
 "gl_Position= vec4(position.x, position.y, position.z, 1.0f);\n"
 "ourColor = color;\n"
+"TexCoord = vec2(texCoord.x, 1,0-texCoord-y);\n"
 "}\0";
 
 const GLchar* fragmentShaderSource = "#version 330 core\n"
 "in vec3 ourColor;\n"
+"in vec2 TexCoord;\n"
 "out vec4 color;\n"
+"uniform sample2D ourTexture;\n"
 "void main()\n"
 "{\n"
-"color = vec4 (ourColor, 1.0f);\n"
+"color = texture(ourTexture, TexCoord);\n"
 "}\n\0";
 
 void main()
