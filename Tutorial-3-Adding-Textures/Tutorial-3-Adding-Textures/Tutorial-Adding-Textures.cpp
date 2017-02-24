@@ -204,6 +204,13 @@ void main()
 		//swap the screen buffers
 		glfwSwapBuffers(window);
 	}
+	
+	//Clean up after use
+	glDeleteVertexArrays(1, &VAO);
+	glDeleteBuffers(1, &VBO);
+	glDeleteBuffers(1, &EBO);
+
+	glfwTerminate();
 }
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
