@@ -24,14 +24,14 @@ const GLchar* vertexShaderSource = "#version 330 core\n"
 "{\n"
 "gl_Position= vec4(position.x, position.y, position.z, 1.0f);\n"
 "ourColor = color;\n"
-"TexCoord = vec2(texCoord.x, 1,0-texCoord-y);\n"
+"TexCoord = vec2(texCoord.x, 1.0-texCoord.y);\n"
 "}\0";
 
 const GLchar* fragmentShaderSource = "#version 330 core\n"
 "in vec3 ourColor;\n"
 "in vec2 TexCoord;\n"
 "out vec4 color;\n"
-"uniform sample2D ourTexture;\n"
+"uniform sampler2D ourTexture;\n"
 "void main()\n"
 "{\n"
 "color = texture(ourTexture, TexCoord);\n"
@@ -169,12 +169,12 @@ void main()
 	glBindTexture(GL_TEXTURE_2D, texture1);
 
 	//Texture Wrapping
-	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
 	//Texture filtering
-	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-	glTextureParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//load texture
 	unsigned char* image = SOIL_load_image("./testing.png", &width1, &height1, 0, SOIL_LOAD_RGBA);
