@@ -177,7 +177,7 @@ void main()
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
 	//load texture
-	unsigned char* image = SOIL_load_image("./testing.png", &width1, &height1, 0, SOIL_LOAD_RGBA);
+	unsigned char* image = SOIL_load_image("testing.jpg", &width1, &height1, 0, SOIL_LOAD_RGBA);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width1, height1, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
 	//generating mipmaps
