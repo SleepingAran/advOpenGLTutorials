@@ -32,9 +32,11 @@ const GLchar* fragmentShaderSource = "#version 330 core\n"
 "in vec2 TexCoord;\n"
 "out vec4 color;\n"
 "uniform sampler2D ourTexture;\n"
+"uniform sampler2D ourTexture1;\n"
 "void main()\n"
 "{\n"
-"color = texture(ourTexture, TexCoord);\n"
+//"color = texture(ourTexture, TexCoord);\n"
+"color = mix(texture(ourTexture, TexCoord), texture(ourTexture1,TexCoord),0.2) * vec4(ourColor,1.0f);\n"
 "}\n\0";
 
 void main()
@@ -185,6 +187,31 @@ void main()
 	SOIL_free_image_data(image);
 	glBindTexture(GL_TEXTURE_2D, 0); //unbind texture
 
+	
+	///
+	//Generate Texture
+	GLuint texture2;
+	int width2, height2;
+	glGenTextures(1, &texture2);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	//Texture Wrapping
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+	//Texture filtering
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+	//load texture
+	unsigned char* image1 = SOIL_load_image("testing.png", &width2, &height2, 0, SOIL_LOAD_RGBA);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width2, height2, 0, GL_RGBA, GL_UNSIGNED_BYTE, image1);
+
+	//generating mipmaps
+	glGenerateMipmap(GL_TEXTURE_2D);
+	SOIL_free_image_data(image1);
+	glBindTexture(GL_TEXTURE_2D, 1); //unbind texture
+
 	while (!glfwWindowShouldClose(window))
 	{
 		//Check if any event activated
@@ -201,6 +228,10 @@ void main()
 		glActiveTexture(GL_TEXTURE);
 		glBindTexture(GL_TEXTURE_2D, texture1);
 		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture"), 0);
+
+		glActiveTexture(GL_TEXTURE);
+		glBindTexture(GL_TEXTURE_2D, texture2);
+		glUniform1i(glGetUniformLocation(shaderProgram, "ourTexture1"), 1);
 
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
