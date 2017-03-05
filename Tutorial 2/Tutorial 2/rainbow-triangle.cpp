@@ -8,6 +8,10 @@ using namespace std;
 //Include GLFW
 #include <opengl\include\GLFW\glfw3.h>
 
+#include <opengl\glm\glm.hpp>
+#include <opengl\glm\gtc\matrix_transform.hpp>
+#include <opengl\glm\gtc\type_ptr.hpp>
+
 //Function Prototype
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 
@@ -15,6 +19,7 @@ const GLchar* vertexShaderSource = "#version 330 core\n"
 "layout (location =0 ) in vec3 position;\n"
 "layout (location =1 ) in vec3 color;\n"
 "out vec3 ourColor;\n"
+"uniform mat4 transform;\n"
 "void main()\n"
 "{\n"
 "gl_Position= vec4(position.x, position.y, position.z, 1.0f);\n"
@@ -136,9 +141,13 @@ void main()
 		//Clear the colorbuffer
 		glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
-
-		//draw triangle
 		glUseProgram(shaderProgram);
+		glm::mat4 transform;
+		transform = glm::rotate(transform, (GLfloat)glfwGetTime()*10.0f, glm::vec3(0.0f, 0.0f, 1.0f));
+		GLint transformLocation = glGetUniformLocation(shaderProgram, "transform");
+		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transform));
+		//draw triangle
+		
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3);
 		glBindVertexArray(0);

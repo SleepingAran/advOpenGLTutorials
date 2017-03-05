@@ -8,6 +8,7 @@
 #include <opengl\include\GLFW\glfw3.h>
 
 //GLM for transformation
+//add this
 #include <opengl\glm\glm.hpp>
 #include <opengl\glm\gtc\matrix_transform.hpp>
 #include <opengl\glm\gtc\type_ptr.hpp>
@@ -85,12 +86,14 @@ void main()
 		ourShader.Use();
 
 		//transformation
+		//add this
 		glm::mat4 transform;
-		transform = glm::translate(transform, glm::vec3(0.5f, 0.5f, 0.0f));
-		transform = glm::rotate(transform, (GLfloat)glfwGetTime()*30000.0f, glm::vec3(0.0f,0.0f,1.0f));
+		transform = glm::translate(transform, glm::vec3((GLfloat)abs(sin(glfwGetTime())*0.5f), (GLfloat)abs(cos(glfwGetTime())*0.5f), 0.0f)); //translate
+		//transform = glm::rotate(transform, (GLfloat)glfwGetTime()*2.0f, glm::vec3(1.0f,0.0f,0.0f)); //rotate
+		//transform = glm::scale(transform, glm::vec3((GLfloat)sin(glfwGetTime())*1.0f, (GLfloat)sin(glfwGetTime())*1.0f, (GLfloat)sin(glfwGetTime())*1.0f)); //scale
 		GLint transformLocation = glGetUniformLocation(ourShader.Program, "transform");
 		glUniformMatrix4fv(transformLocation, 1, GL_FALSE, glm::value_ptr(transform));
-
+		
 		//drawing
 		
 		glBindVertexArray(VAO);
