@@ -26,6 +26,8 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 bool keys[1024];
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
+GLfloat yaw = -90.0f;
+GLfloat pitch = 0.0f;
 void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void do_movement();
@@ -47,11 +49,12 @@ void main()
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Coordinate System", nullptr, nullptr);
 	glfwSetKeyCallback(window, key_callback);
 
+	//set mousecallback
+	glfwSetCursorPosCallback(window, mouse_callback);
 	//hide pointer 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
-	//set mousecallback
-	glfwSetKeyCallback(window, mouse_callback);
+	
 	//For higher resolution screen
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -205,7 +208,7 @@ void main()
 	///
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat currentFrame = glfwGetTime();
+		GLfloat currentFrame = (GLfloat)glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		glfwPollEvents();
@@ -233,30 +236,14 @@ void main()
 		
 		//look at
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-		/*
-		//Create camera position
-		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
-		//Create camera direction
-		glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-		glm::vec3 cameraDirection = glm::normalize(cameraPos - cameraTarget);
+		//mouse movement
+		glm::vec3 front;
+		front.x = cos(glm::radians(pitch))*cos(glm::radians(yaw));
+		front.y = sin(glm::radians(pitch));
+		front.z = cos(glm::radians(pitch))*sin(glm::radians(yaw));
+		cameraFront = glm::normalize(front);
 
-		//Right axis
-		glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-		glm::vec3 cameraRight = glm::normalize(glm::cross(up, cameraDirection));
-
-		//up axis
-		glm::vec3 cameraUp = glm::cross(cameraDirection, cameraRight);
-
-		//look at
-		view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		
-		//rotate camera
-		GLfloat radius = 5.0f;
-		GLfloat camX = sin(glfwGetTime())*radius;
-		GLfloat camZ = cos(glfwGetTime())*radius;
-		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-		*/
 		//Get uniform location
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
@@ -319,4 +306,12 @@ void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
 	GLfloat sensitivity = 0.1f;
 	xoffset *= sensitivity;
 	yoffset *= sensitivity;
+
+	yaw += xoffset;
+	pitch += yoffset;
+	
+	if (pitch > 89.0f)
+		pitch = 89.0f;
+	if (pitch < -89.0f)
+		pitch = -89.0f;
 }
