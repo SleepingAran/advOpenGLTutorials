@@ -28,8 +28,10 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 GLfloat yaw = -90.0f;
 GLfloat pitch = 0.0f;
+GLfloat fov = 45.0f;
 void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 void do_movement();
 //limit framerate on all hardware
 GLfloat deltaTime = 0.0f;
@@ -208,7 +210,7 @@ void main()
 	///
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat currentFrame = (GLfloat)glfwGetTime();
+		GLfloat currentFrame = glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		glfwPollEvents();
@@ -283,7 +285,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void do_movement()
 {
-	GLfloat cameraSpeed = 0.001f * deltaTime;
+	GLfloat cameraSpeed = 1.0f * deltaTime;
 	if (keys[GLFW_KEY_W])
 		cameraPos += cameraSpeed*cameraFront;
 	if (keys[ GLFW_KEY_S])
@@ -314,4 +316,14 @@ void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
 		pitch = 89.0f;
 	if (pitch < -89.0f)
 		pitch = -89.0f;
+}
+
+void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
+{
+	if (fov >= 1.0f && fov <= 45.0f)
+		fov -= yoffset;
+	if (fov <= 1.0f)
+		fov = 1.0f;
+	if (fov >= 45.0f)
+		fov = 45.0f;
 }
