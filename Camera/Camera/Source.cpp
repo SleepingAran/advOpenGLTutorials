@@ -24,6 +24,9 @@ glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 bool keys[1024];
+GLfloat lastX = WIDTH / 2.0;
+GLfloat lastY = HEIGHT / 2.0;
+void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void do_movement();
 //limit framerate on all hardware
@@ -43,8 +46,12 @@ void main()
 
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Coordinate System", nullptr, nullptr);
 	glfwSetKeyCallback(window, key_callback);
+
 	//hide pointer 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+
+	//set mousecallback
+	glfwSetKeyCallback(window, mouse_callback);
 	//For higher resolution screen
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -300,4 +307,16 @@ void do_movement()
 		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp))*cameraSpeed;
 
 	
+}
+
+void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
+{
+	GLfloat xoffset = Xcurrentpos - lastX;
+	GLfloat yoffset = lastY - Ycurrentpos;
+	lastX = Xcurrentpos;
+	lastY = Ycurrentpos;
+
+	GLfloat sensitivity = 0.1f;
+	xoffset *= sensitivity;
+	yoffset *= sensitivity;
 }
