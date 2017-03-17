@@ -56,6 +56,8 @@ void main()
 	//hide pointer 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
+	//set scrollcallback
+	glfwSetScrollCallback(window, scroll_callback);
 	
 	//For higher resolution screen
 	int screenWidth, screenHeight;
@@ -234,7 +236,7 @@ void main()
 		glm::mat4 model, view, projection;
 		model = glm::rotate(model, 1.0f*((GLfloat)(sin(glfwGetTime()))), glm::vec3(0.5f, 1.0f, 0.0f));
 		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		projection = glm::perspective(45.0f, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+		projection = glm::perspective(fov, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 		
 		//look at
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -321,7 +323,7 @@ void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
 void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
 {
 	if (fov >= 1.0f && fov <= 45.0f)
-		fov -= yoffset;
+		fov -= yoffset*0.1f;
 	if (fov <= 1.0f)
 		fov = 1.0f;
 	if (fov >= 45.0f)
