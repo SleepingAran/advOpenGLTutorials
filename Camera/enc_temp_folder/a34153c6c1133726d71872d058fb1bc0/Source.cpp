@@ -26,9 +26,7 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 bool keys[1024];
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void do_movement();
-//limit framerate on all hardware
-GLfloat deltaTime = 0.0f;
-GLfloat lastFrame = 0.0f;
+
 void main()
 {
 	//Initialization Start
@@ -43,8 +41,6 @@ void main()
 
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Coordinate System", nullptr, nullptr);
 	glfwSetKeyCallback(window, key_callback);
-	//hide pointer 
-	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 	//For higher resolution screen
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -198,9 +194,6 @@ void main()
 	///
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
 		glfwPollEvents();
 		//clear screen
 		glClearColor(0.3f, 0.3f, 0.5f, 1.0f);
@@ -289,7 +282,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void do_movement()
 {
-	GLfloat cameraSpeed = 0.001f * deltaTime;
+	GLfloat cameraSpeed = 0.001f;
 	if (keys[GLFW_KEY_W])
 		cameraPos += cameraSpeed*cameraFront;
 	if (keys[ GLFW_KEY_S])
