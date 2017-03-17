@@ -18,6 +18,14 @@ using namespace std;
 //Include Shader header file
 #include "Shader.h"
 const GLint WIDTH = 800, HEIGHT = 600;
+//Setup a camera system
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+bool keys[1024];
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
+void do_movement();
 
 void main()
 {
@@ -32,7 +40,7 @@ void main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Coordinate System", nullptr, nullptr);
-
+	glfwSetKeyCallback(window, key_callback);
 	//For higher resolution screen
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -202,13 +210,16 @@ void main()
 		glUniform1i(glGetUniformLocation(ourShader.Program, "ourTexture2"), 0);
 		//Call shader
 		ourShader.Use();
-
+		do_movement();
 		//Create transformation
 		glm::mat4 model, view, projection;
-		//model = glm::rotate(model, 1.0f*((GLfloat)(sin(glfwGetTime()))), glm::vec3(0.5f, 1.0f, 0.0f));
+		model = glm::rotate(model, 1.0f*((GLfloat)(sin(glfwGetTime()))), glm::vec3(0.5f, 1.0f, 0.0f));
 		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 		projection = glm::perspective(45.0f, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 		
+		//look at
+		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+		/*
 		//Create camera position
 		glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
@@ -225,13 +236,13 @@ void main()
 
 		//look at
 		view = glm::lookAt(glm::vec3(0.0f, 0.0f, 3.0f), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
+		
 		//rotate camera
-		GLfloat radius = 10.0f;
+		GLfloat radius = 5.0f;
 		GLfloat camX = sin(glfwGetTime())*radius;
 		GLfloat camZ = cos(glfwGetTime())*radius;
 		view = glm::lookAt(glm::vec3(camX, 0.0f, camZ), glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-
+		*/
 		//Get uniform location
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
@@ -254,4 +265,32 @@ void main()
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 
+}
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
+{
+	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (key >= 0 && key < 1024)
+	{
+		if (action == GLFW_PRESS)
+			keys[key] = true;
+		else if (action == GLFW_RELEASE)
+			keys[key] = false;
+	}
+}
+
+void do_movement()
+{
+	GLfloat cameraSpeed = 0.05f;
+	if (keys[GLFW_KEY_W])
+		cameraPos += cameraSpeed*cameraFront;
+	if (keys[ GLFW_KEY_S])
+		cameraPos -= cameraSpeed*cameraFront;
+	if (keys [GLFW_KEY_A])
+		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp))*cameraSpeed;
+	if (keys[GLFW_KEY_D])
+		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp))*cameraSpeed;
+
+	
 }
