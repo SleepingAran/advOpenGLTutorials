@@ -24,10 +24,10 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
+//void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-void do_movement();
+//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+//void do_movement();
 //limit framerate on all hardware
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -47,12 +47,12 @@ void main()
 	glfwSetKeyCallback(window, key_callback);
 
 	//set mousecallback
-	glfwSetCursorPosCallback(window, mouse_callback);
+	//glfwSetCursorPosCallback(window, mouse_callback);
 	//hide pointer 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	//set scrollcallback
-	glfwSetScrollCallback(window, scroll_callback);
+	//glfwSetScrollCallback(window, scroll_callback);
 	
 	//For higher resolution screen
 	int screenWidth, screenHeight;
@@ -208,7 +208,7 @@ void main()
 	///
 	while (!glfwWindowShouldClose(window))
 	{
-		GLfloat currentFrame = glfwGetTime();
+		GLfloat currentFrame = (GLfloat)glfwGetTime();
 		deltaTime = currentFrame - lastFrame;
 		lastFrame = currentFrame;
 		glfwPollEvents();
@@ -227,12 +227,14 @@ void main()
 		glUniform1i(glGetUniformLocation(ourShader.Program, "ourTexture2"), 0);
 		//Call shader
 		ourShader.Use();
+		/*
 		do_movement();
+		
 		//Create transformation
 		glm::mat4 model, view, projection;
 		model = glm::rotate(model, 1.0f*((GLfloat)(sin(glfwGetTime()))), glm::vec3(0.5f, 1.0f, 0.0f));
 		//view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-		projection = glm::perspective(fov, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
+		//projection = glm::perspective(fov, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 		
 		//look at
 		view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
@@ -253,7 +255,7 @@ void main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		
+		*/
 		//draw container
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
@@ -280,7 +282,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			keys[key] = false;
 	}
 }
-
+/*
 void do_movement()
 {
 	GLfloat cameraSpeed = 1.0f * deltaTime;
@@ -325,3 +327,4 @@ void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
 	if (fov >= 45.0f)
 		fov = 45.0f;
 }
+*/

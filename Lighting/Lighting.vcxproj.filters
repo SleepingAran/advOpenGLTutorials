@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Shader and Fragment Shader">
+      <UniqueIdentifier>{0dec7e04-1fe1-4d10-9b23-d204e37fc09e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h">
@@ -26,5 +29,34 @@
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ambient.frag">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="diffuse.frag">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="diffuse.vs">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="lamp.frag">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="lamp.vs">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="lighting.frag">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="lighting.vs">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="spec.frag">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
+    <None Include="spec.vs">
+      <Filter>Shader and Fragment Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>
