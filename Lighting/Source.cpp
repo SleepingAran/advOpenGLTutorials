@@ -162,7 +162,7 @@ void main()
 		lastFrame = currentFrame;
 		glfwPollEvents();
 		//clear screen
-		glClearColor(.0f, .0f, .0f, 1.0f);
+		glClearColor(.5f, .5f, .5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
 
 		//Call shader
