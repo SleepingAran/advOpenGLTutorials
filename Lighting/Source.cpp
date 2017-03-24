@@ -205,7 +205,10 @@ void main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		//draw light object
 		glBindVertexArray(lightVAO);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
 
+		glfwSwapBuffers(window);
 
 		
 	}
