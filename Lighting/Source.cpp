@@ -24,10 +24,10 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 glm::vec3 lightPos(1.2f, 1.0f, 2.0f);
-//void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
+void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos);
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode);
-//void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
-//void do_movement();
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
+void do_movement();
 //limit framerate on all hardware
 GLfloat deltaTime = 0.0f;
 GLfloat lastFrame = 0.0f;
@@ -47,12 +47,12 @@ void main()
 	glfwSetKeyCallback(window, key_callback);
 
 	//set mousecallback
-	//glfwSetCursorPosCallback(window, mouse_callback);
+	glfwSetCursorPosCallback(window, mouse_callback);
 	//hide pointer 
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
 
 	//set scrollcallback
-	//glfwSetScrollCallback(window, scroll_callback);
+	glfwSetScrollCallback(window, scroll_callback);
 	
 	//For higher resolution screen
 	int screenWidth, screenHeight;
@@ -143,7 +143,7 @@ void main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glBindVertexArray(containerVAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid)* 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*) 0);
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 
@@ -164,7 +164,7 @@ void main()
 
 		//Call shader
 		ourShader.Use();
-
+		do_movement();
 		GLint objectColorLoc = glGetUniformLocation(ourShader.Program, "objectColor");
 		GLint lightColorLoc = glGetUniformLocation(ourShader.Program, "lightColor");
 
@@ -174,7 +174,6 @@ void main()
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
 		glm::mat4 projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-
 		//Get the uniform locations
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
