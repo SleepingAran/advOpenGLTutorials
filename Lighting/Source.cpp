@@ -143,7 +143,7 @@ void main()
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
 	glBindVertexArray(containerVAO);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid) * 0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid)* 0);
 	glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
 
@@ -213,7 +213,7 @@ void main()
 		
 	}
 
-	glDeleteVertexArrays(1, &VAO);
+	glDeleteVertexArrays(1, &containerVAO);
 	glDeleteBuffers(1, &VBO);
 	glfwTerminate();
 
@@ -234,15 +234,14 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
 void do_movement()
 {
-	GLfloat cameraSpeed = 1.0f * deltaTime;
 	if (keys[GLFW_KEY_W])
-		cameraPos += cameraSpeed*cameraFront;
-	if (keys[ GLFW_KEY_S])
-		cameraPos -= cameraSpeed*cameraFront;
-	if (keys [GLFW_KEY_A])
-		cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp))*cameraSpeed;
+		camera.ProcessKeyboard(FORWARD, deltaTime);
+	if (keys[GLFW_KEY_S])
+		camera.ProcessKeyboard(BACKWARD, deltaTime);
+	if (keys[GLFW_KEY_A])
+		camera.ProcessKeyboard(LEFT, deltaTime);
 	if (keys[GLFW_KEY_D])
-		cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp))*cameraSpeed;
+		camera.ProcessKeyboard(RIGHT, deltaTime);
 
 	
 }
@@ -259,10 +258,5 @@ void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
 
 void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
 {
-	if (fov >= 1.0f && fov <= 45.0f)
-		fov -= yoffset*0.1f;
-	if (fov <= 1.0f)
-		fov = 1.0f;
-	if (fov >= 45.0f)
-		fov = 45.0f;
+	camera.ProcessMouseScroll(yoffset);
 }
