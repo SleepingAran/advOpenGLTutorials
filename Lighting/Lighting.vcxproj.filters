@@ -59,4 +59,9 @@
       <Filter>Shader and Fragment Shader</Filter>
     </None>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="diffuse.txt">
+      <Filter>Shader and Fragment Shader</Filter>
+    </Text>
+  </ItemGroup>
 </Project>
