@@ -231,7 +231,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			keys[key] = false;
 	}
 }
-/*
+
 void do_movement()
 {
 	GLfloat cameraSpeed = 1.0f * deltaTime;
@@ -254,17 +254,7 @@ void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)
 	lastX = Xcurrentpos;
 	lastY = Ycurrentpos;
 
-	GLfloat sensitivity = 0.1f;
-	xoffset *= sensitivity;
-	yoffset *= sensitivity;
-
-	yaw += xoffset;
-	pitch += yoffset;
-	
-	if (pitch > 89.0f)
-		pitch = 89.0f;
-	if (pitch < -89.0f)
-		pitch = -89.0f;
+	camera.ProcessMouseMovement(xoffset, yoffset);
 }
 
 void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
@@ -276,4 +266,3 @@ void scroll_callback(GLFWwindow* window, double xoffeset, double yoffset)
 	if (fov >= 45.0f)
 		fov = 45.0f;
 }
-*/
