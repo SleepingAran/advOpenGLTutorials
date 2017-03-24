@@ -191,6 +191,22 @@ void main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
+		//Draw the lamp object
+		lampShader.Use();
+		modelLoc = glGetUniformLocation(lampShader.Program, "model");
+		viewLoc = glGetUniformLocation(lampShader.Program, "view");
+		projLoc = glGetUniformLocation(lampShader.Program, "projection");
+		//Set matrices
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		model = glm::mat4();
+		model = glm::translate(model, lightPos);
+		model = glm::scale(model, glm::vec3(0.2f)); //make it smaller than the container
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		//draw light object
+		glBindVertexArray(lightVAO);
+
+
 		
 	}
 
