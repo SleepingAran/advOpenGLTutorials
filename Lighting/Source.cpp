@@ -74,7 +74,8 @@ void main()
 	//Initialization End
 	///////////////////////////////////////////////
 
-	Shader ourShader("core.txt","corefrag.txt");
+	Shader ourShader("lighting.vs","lighting.frag");
+	Shader lampShader("lamp.vs", "lamp.frag");
 	/*GLfloat vertices[] =
 	{
 		//Position			//Texture
