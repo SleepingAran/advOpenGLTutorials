@@ -27,4 +27,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Tutorial 11 - Materials\material.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Tutorial 11 - Materials\material.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Tutorial 12 - Lighting Maps\maps.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Tutorial 12 - Lighting Maps\maps.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
 </Project>

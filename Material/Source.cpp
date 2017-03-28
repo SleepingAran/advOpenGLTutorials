@@ -176,49 +176,16 @@ void main()
 		//Call shader
 		ourShader.Use();
 		do_movement();
-		GLint objectColorLoc = glGetUniformLocation(ourShader.Program, "objectColor");
-		GLint lightColorLoc = glGetUniformLocation(ourShader.Program, "lightColor");
-		GLint lightPosLoc = glGetUniformLocation(ourShader.Program, "lightPos");
+		
+		GLint lightPosLoc = glGetUniformLocation(ourShader.Program, "light.position");
+		GLint viewPosLoc = glGetUniformLocation(ourShader.Program, "viewPos");
 		glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
+		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
 		
-		//diffuse
-		glUniform3f(objectColorLoc, 1.0f, 0.5f, 0.31f);
-		glUniform3f(lightColorLoc, 1.0f, 0.5f, 1.0f);
-		glm::mat4 view;
-		view = camera.GetViewMatrix();
-		glm::mat4 projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-		//Get the uniform locations
-		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
-		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
-		GLint projLoc = glGetUniformLocation(ourShader.Program, "projection");
-
-		//pass matrices to shader
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
-		//draw the container
-		glBindVertexArray(containerVAO);
-		glm::mat4 model;
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
-		
-		//Draw the lamp object
-		lampShader.Use();
-		 modelLoc = glGetUniformLocation(lampShader.Program, "model");
-		 viewLoc = glGetUniformLocation(lampShader.Program, "view");
-		 projLoc = glGetUniformLocation(lampShader.Program, "projection");
-		//Set matrices
-		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
-		model = glm::mat4();
-		model = glm::translate(model, lightPos);
-		model = glm::scale(model, glm::vec3(0.2f)); //make it smaller than the container
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//draw light object
-		glBindVertexArray(lightVAO);
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-		glBindVertexArray(0);
+		glUniform3f(glGetUniformLocation(ourShader.Program, "material.ambient"), 1.0f, 0.5f, 0.31f);
+		glUniform3f(glGetUniformLocation(ourShader.Program, "material.diffuse"), 1.0f, 0.5f, 0.31f);
+		glUniform3f(glGetUniformLocation(ourShader.Program, "material.specular"), 1.0f, 0.5f, 0.31f);
+		glUniform1f(glGetUniformLocation(ourShader.Program, "material.shininess"), 32.0f);
 
 		
 		glfwSwapBuffers(window);
