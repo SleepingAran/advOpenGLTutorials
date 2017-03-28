@@ -76,7 +76,7 @@ void main()
 	//Initialization End
 	///////////////////////////////////////////////
 
-	Shader ourShader("material.vs","material.frag");
+	Shader ourShader("material.vs", "material.frag");
 	Shader lampShader("lamp.vs", "lamp.frag");
 	/*GLfloat vertices[] =
 	{
@@ -186,6 +186,20 @@ void main()
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.diffuse"), 1.0f, 0.5f, 0.31f);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.specular"), 1.0f, 0.5f, 0.31f);
 		glUniform1f(glGetUniformLocation(ourShader.Program, "material.shininess"), 32.0f);
+
+		GLint lightAmbientLoc = glGetUniformLocation(ourShader.Program, "light.ambient");
+		GLint lightDiffuseLoc = glGetUniformLocation(ourShader.Program, "light.diffuse");
+		GLint lightSpecularLoc = glGetUniformLocation(ourShader.Program, "light.specular");
+		glUniform3f(lightAmbientLoc, 0.2f, 0.2f, 0.2f);
+		glUniform3f(lightDiffuseLoc, 0.5f, 0.5f, 0.5f);
+		glUniform3f(lightSpecularLoc, 1.0f, 1.0f, 1.0f);
+
+		glm::vec3 lightColor;
+		lightColor.x = sin(glfwGetTime()*2.0f);
+		lightColor.y = sin(glfwGetTime()*0.7f);
+		lightColor.z = sin(glfwGetTime()*1.3f);
+		glm::vec3 diffuseColor = lightColor *glm::vec3(0.5f);
+		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
 		
 		glfwSwapBuffers(window);
