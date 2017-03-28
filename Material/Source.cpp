@@ -181,19 +181,19 @@ void main()
 		GLint viewPosLoc = glGetUniformLocation(ourShader.Program, "viewPos");
 		glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
 		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
-		
+		//light properties
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.ambient"), 1.0f, 0.5f, 0.31f);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.diffuse"), 1.0f, 0.5f, 0.31f);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.specular"), 1.0f, 0.5f, 0.31f);
 		glUniform1f(glGetUniformLocation(ourShader.Program, "material.shininess"), 32.0f);
-
+		//add light location
 		GLint lightAmbientLoc = glGetUniformLocation(ourShader.Program, "light.ambient");
 		GLint lightDiffuseLoc = glGetUniformLocation(ourShader.Program, "light.diffuse");
 		GLint lightSpecularLoc = glGetUniformLocation(ourShader.Program, "light.specular");
 		glUniform3f(lightAmbientLoc, 0.2f, 0.2f, 0.2f);
 		glUniform3f(lightDiffuseLoc, 0.5f, 0.5f, 0.5f);
 		glUniform3f(lightSpecularLoc, 1.0f, 1.0f, 1.0f);
-
+		//make it RGB
 		glm::vec3 lightColor;
 		lightColor.x = sin(glfwGetTime()*2.0f);
 		lightColor.y = sin(glfwGetTime()*0.7f);
@@ -201,7 +201,10 @@ void main()
 		glm::vec3 diffuseColor = lightColor *glm::vec3(0.5f);
 		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f);
 
-		
+		glm::mat4 view;
+		view = camera.GetViewMatrix();
+		glm::mat4 model;
+		glm::mat4 projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
 		glfwSwapBuffers(window);
 		
 	}
