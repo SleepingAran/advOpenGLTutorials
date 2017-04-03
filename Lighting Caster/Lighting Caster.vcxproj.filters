@@ -53,12 +53,18 @@
     <None Include="pointLight.frag">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="spotLight.frag">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="dirLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="pointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spotLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

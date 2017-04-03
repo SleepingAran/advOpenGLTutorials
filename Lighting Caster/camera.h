@@ -116,7 +116,11 @@ public:
 		if (this->Zoom >= 45.0f)
 			this->Zoom = 45.0f;
 	}
-
+	//4
+	glm::vec3 GetFront()
+	{
+		return this->Front;
+	}
 private:
 	// Calculates the front vector from the Camera's (updated) Eular Angles
 	void updateCameraVectors()
