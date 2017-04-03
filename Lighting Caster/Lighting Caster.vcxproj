@@ -113,7 +113,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="dirLight.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="pointLight.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="camera.h" />
@@ -123,10 +126,11 @@
     <None Include="ambient.frag" />
     <None Include="diffuse.frag" />
     <None Include="diffuse.vs" />
+    <None Include="dirLight.frag" />
     <None Include="lamp.frag" />
     <None Include="lamp.vs" />
-    <None Include="lighting.frag" />
     <None Include="lighting.vs" />
+    <None Include="pointLight.frag" />
     <None Include="spec.frag" />
     <None Include="spec.vs" />
   </ItemGroup>

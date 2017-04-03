@@ -53,7 +53,7 @@ void main()
 
 	//set scrollcallback
 	glfwSetScrollCallback(window, scroll_callback);
-	
+
 	//For higher resolution screen
 	int screenWidth, screenHeight;
 	glfwGetFramebufferSize(window, &screenWidth, &screenHeight);
@@ -74,9 +74,9 @@ void main()
 	//Initialization End
 	///////////////////////////////////////////////
 
-	Shader ourShader("lighting.vs","dirLight.frag");
+	Shader ourShader("lighting.vs", "pointLight.frag");
 	Shader lampShader("lamp.vs", "lamp.frag");
-	
+
 	GLfloat vertices[] = {
 		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -135,7 +135,7 @@ void main()
 	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*) 0);
 	//glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
-	
+
 	GLuint lightVAO;
 	glGenVertexArrays(1, &lightVAO);
 	glBindVertexArray(lightVAO);
@@ -145,7 +145,7 @@ void main()
 	//glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 	//glEnableVertexAttribArray(0);
 	glBindVertexArray(0);
-	
+
 	//Position different containers
 	// 4
 	glm::vec3 cubePositions[] = {
@@ -167,45 +167,48 @@ void main()
 		lastFrame = currentFrame;
 		glfwPollEvents();
 		do_movement();
-		glm::vec3 lightPos(-0.2f, -1.0f, -0.3f);
+		glm::vec3 lightPos(1.2f*(GLfloat)sin(glfwGetTime()), 1.0f, 2.0f*(GLfloat)cos(glfwGetTime()));
 		//clear screen
 		glClearColor(.0f, .0f, .0f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Call shader
 		ourShader.Use();
-		
-		//GLint lightPosLoc = glGetUniformLocation(ourShader.Program, "light.position");
-		// 3
-		GLint lightDirLoc = glGetUniformLocation(ourShader.Program, "light.direction");
+		// 4
+		GLint lightPosLoc = glGetUniformLocation(ourShader.Program, "light.position");
+		//GLint lightDirLoc = glGetUniformLocation(ourShader.Program, "light.direction");
 		GLint viewPosLoc = glGetUniformLocation(ourShader.Program, "viewPos");
-		glUniform3f(lightDirLoc, lightPos.x, lightPos.y, lightPos.z);
+		glUniform3f(lightPosLoc, lightPos.x, lightPos.y, lightPos.z);
 		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
 
 		// Set lights properties
 		glm::vec3 lightColor;
-		lightColor.r = 1;
-		lightColor.g = 0.5;
-		lightColor.b = 1;
+		lightColor.r = 1.0f;
+		lightColor.g = 1.0f;
+		lightColor.b = 1.0f;
 
 		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // Decrease the influence
 		glm::vec3 ambientColor = diffuseColor * glm::vec3(0.2f); // Low influence
 		glUniform3f(glGetUniformLocation(ourShader.Program, "light.ambient"), ambientColor.r, ambientColor.g, ambientColor.b);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "light.diffuse"), diffuseColor.r, diffuseColor.g, diffuseColor.b);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "light.specular"), 1.0f, 1.0f, 1.0f);
+		// 5
+		glUniform1f(glGetUniformLocation(ourShader.Program, "light.constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(ourShader.Program, "light.linear"), 0.07f);
+		glUniform1f(glGetUniformLocation(ourShader.Program, "light.quadratic"), 0.017f);
 
 		// Set material properties
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.ambient"), 1.0f, 0.5f, 0.31f);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.diffuse"), 1.0f, 0.5f, 0.31f);
 		glUniform3f(glGetUniformLocation(ourShader.Program, "material.specular"), 0.5f, 0.5f, 0.5f); // Specular doesn't have full effect on this object's material
-		glUniform1f(glGetUniformLocation(ourShader.Program, "material.shininess"), 32.0f);
+		glUniform1f(glGetUniformLocation(ourShader.Program, "material.shininess"), 3200.0f);
 
-		
+
 		//Create camera transformation
 		glm::mat4 view;
 		view = camera.GetViewMatrix();
 		glm::mat4 projection = glm::perspective(camera.Zoom, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
-		
+
 		//Get the uniform locations
 		GLint modelLoc = glGetUniformLocation(ourShader.Program, "model");
 		GLint viewLoc = glGetUniformLocation(ourShader.Program, "view");
@@ -216,10 +219,10 @@ void main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
 		//draw the container
-		
+
 		glBindVertexArray(containerVAO);
 		glm::mat4 model;
-		// 5
+		
 		for (GLuint i = 0; i < 10; i++)
 		{
 			model = glm::mat4();
@@ -231,12 +234,12 @@ void main()
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
 		glBindVertexArray(0);
-		
+
 		//Draw the lamp object
 		lampShader.Use();
-		 modelLoc = glGetUniformLocation(lampShader.Program, "model");
-		 viewLoc = glGetUniformLocation(lampShader.Program, "view");
-		 projLoc = glGetUniformLocation(lampShader.Program, "projection");
+		modelLoc = glGetUniformLocation(lampShader.Program, "model");
+		viewLoc = glGetUniformLocation(lampShader.Program, "view");
+		projLoc = glGetUniformLocation(lampShader.Program, "projection");
 		//Set matrices
 		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
@@ -249,9 +252,9 @@ void main()
 		glDrawArrays(GL_TRIANGLES, 0, 36);
 		glBindVertexArray(0);
 
-		
+
 		glfwSwapBuffers(window);
-		
+
 	}
 
 	//glDeleteVertexArrays(1, &containerVAO);
@@ -284,7 +287,7 @@ void do_movement()
 	if (keys[GLFW_KEY_D])
 		camera.ProcessKeyboard(RIGHT, deltaTime);
 
-	
+
 }
 
 void mouse_callback(GLFWwindow* window, double Xcurrentpos, double Ycurrentpos)

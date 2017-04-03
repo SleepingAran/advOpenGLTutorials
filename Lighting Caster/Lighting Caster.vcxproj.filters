@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -28,9 +23,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="lighting.frag">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="lighting.vs">
       <Filter>Resource Files</Filter>
     </None>
@@ -55,5 +47,19 @@
     <None Include="spec.vs">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="dirLight.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="pointLight.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="dirLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="pointLight.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
