@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{761FAE94-EAE6-4A91-BC00-4DFB8B0F9143}</ProjectGuid>
-    <RootNamespace>LightingCaster</RootNamespace>
+    <ProjectGuid>{9B112C10-1496-49A9-9DAE-CA5054BF1840}</ProjectGuid>
+    <RootNamespace>MultipleLight</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -113,32 +113,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="dirLight.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="pointLight.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="spotLight.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
-    </ClCompile>
+    <None Include="..\multiLight.frag" />
+    <None Include="..\multiLight.vs" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="camera.h" />
-    <ClInclude Include="Shader.h" />
+    <ClCompile Include="..\multipleLight.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ambient.frag" />
-    <None Include="diffuse.frag" />
-    <None Include="diffuse.vs" />
-    <None Include="dirLight.frag" />
-    <None Include="lamp.frag" />
-    <None Include="lamp.vs" />
-    <None Include="lighting.vs" />
-    <None Include="pointLight.frag" />
-    <None Include="spec.frag" />
-    <None Include="spec.vs" />
-    <None Include="spotLight.frag" />
+    <ClInclude Include="..\camera.h" />
+    <ClInclude Include="..\Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -179,7 +179,7 @@ void main()
 		// 3
 		GLint lightDirLoc = glGetUniformLocation(ourShader.Program, "light.direction");
 		GLint viewPosLoc = glGetUniformLocation(ourShader.Program, "viewPos");
-		glUniform3f(lightDirLoc, lightPos.x, lightPos.y, lightPos.z);
+		glUniform3f(lightDirLoc, lightPos.x*(GLfloat)sin(glfwGetTime()), lightPos.y, lightPos.z*(GLfloat)cos(glfwGetTime()));
 		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
 
 		// Set lights properties
