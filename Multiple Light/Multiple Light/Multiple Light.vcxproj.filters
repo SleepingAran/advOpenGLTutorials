@@ -15,16 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\multiLight.frag">
-      <Filter>Resource Files</Filter>
-    </None>
-    <None Include="..\multiLight.vs">
-      <Filter>Resource Files</Filter>
-    </None>
     <None Include="..\lamp.frag">
       <Filter>Resource Files</Filter>
     </None>
     <None Include="..\lamp.vs">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\multilight.frag">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="..\multilight.vs">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

@@ -115,8 +115,8 @@
   <ItemGroup>
     <None Include="..\lamp.frag" />
     <None Include="..\lamp.vs" />
-    <None Include="..\multiLight.frag" />
-    <None Include="..\multiLight.vs" />
+    <None Include="..\multilight.frag" />
+    <None Include="..\multilight.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\multipleLight.cpp" />
