@@ -61,10 +61,10 @@
     <ClCompile Include="dirLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="pointLight.cpp">
+    <ClCompile Include="spotLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="spotLight.cpp">
+    <ClCompile Include="pointLight.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

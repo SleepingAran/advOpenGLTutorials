@@ -177,7 +177,7 @@ void main()
 		lastFrame = currentFrame;
 		glfwPollEvents();
 		//clear screen
-		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+		glClearColor(0.3f, 0.5f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//Call shader
@@ -189,7 +189,7 @@ void main()
 		glUniform3f(viewPosLoc, camera.Position.x, camera.Position.y, camera.Position.z);
 
 		glm::vec3 lightColor;
-		lightColor.r = 1.0f*sin(glfwGetTime());
+		lightColor.r = 0.5f*sin(glfwGetTime());
 		lightColor.g = 1.0f*cos(glfwGetTime());
 		lightColor.b = 1.0f;
 		glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f); // Decrease the influence

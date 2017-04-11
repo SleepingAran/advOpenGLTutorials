@@ -87,6 +87,10 @@ vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir)
 
 void main()
 {
+	vec3 ambient = dirLight.ambient * material.ambient;
+	vec3 diffuse = light.diffuse * (diff * material.diffuse);
+    vec3 specular = light.specular * (spec * material.specular);  
+   
 	//Properties
 	vec3 norm = normalize(Normal);
 	vec3 viewDir = normalize(viewPos - FragPos);
@@ -98,5 +102,8 @@ void main()
 	for (int i = 0; i < NR_POINT_LIGHTS; i++)
 		result += CalcPointLight(pointLights[i], norm, FragPos, viewDir);
 
+	result += ambient;
+	result += diffuse;
+	result += specular;
 	color = vec4(result, 1.0f);
 }
