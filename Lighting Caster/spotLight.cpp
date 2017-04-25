@@ -8,7 +8,7 @@ using namespace std;
 #include <opengl\include\GLFW\glfw3.h>
 
 //SOIL
-#include <SOIL.h>
+//#include <SOIL.h>
 //GLM for transformation
 //add this
 #include <opengl\glm\glm.hpp>
