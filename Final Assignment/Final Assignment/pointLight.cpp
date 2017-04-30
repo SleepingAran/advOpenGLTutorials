@@ -286,13 +286,18 @@ void main()
 		//draw the container
 
 		glBindVertexArray(containerVAO);
+
 		glm::mat4 model;
-		
+		GLfloat angle;
 		for (GLuint i = 0; i < 10; i++)
 		{
+			
 			model = glm::mat4();
 			model = glm::translate(model, cubePositions[i]);
-			GLfloat angle = 20.0f * i * (GLfloat)sin(glfwGetTime()*0.01); //added rotation
+			if (i == 0)
+				angle = 20.0f * 0.5f * (GLfloat)sin(glfwGetTime()*0.01); //added rotation
+			else
+				angle = 20.0f * i * (GLfloat)sin(glfwGetTime()*0.01); //added rotation
 			model = glm::rotate(model, angle, glm::vec3(1.0f, 0.3f, 0.5f));
 			glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 

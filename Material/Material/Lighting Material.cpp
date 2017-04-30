@@ -8,7 +8,7 @@ using namespace std;
 #include <opengl\include\GLFW\glfw3.h>
 
 //SOIL
-#include <SOIL.h>
+#include <SOIL\SOIL.h>
 //GLM for transformation
 //add this
 #include <opengl\glm\glm.hpp>
@@ -170,7 +170,7 @@ void main()
 	int width, height;
 	unsigned char* image;
 
-	image = SOIL_load_image("wooden.png", &width, &height, 0, SOIL_LOAD_RGB);
+	image = SOIL_load_image("wooden.png", &width, &height, 0, SOIL_LOAD_RGBA);
 	glBindTexture(GL_TEXTURE_2D, diffuseMap);
 	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, image);
 	glGenerateMipmap(GL_TEXTURE_2D);
